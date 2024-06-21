@@ -1,6 +1,7 @@
 "use client";
 
 import { shorten } from "@/actions/shorten";
+import { urlSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CopyIcon, SparklesIcon, SquareCheckBigIcon } from "lucide-react";
 import { useState } from "react";
@@ -17,13 +18,9 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 
-const formSchema = z.object({
-  url: z.string().url(),
-});
-
 export default function ShortenForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof urlSchema>>({
+    resolver: zodResolver(urlSchema),
     defaultValues: { url: "" },
   });
 
@@ -31,7 +28,7 @@ export default function ShortenForm() {
   const [error, setError] = useState<boolean>(false);
   const [showCopySuccessful, setShowCopySuccessful] = useState<boolean>(false);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof urlSchema>) => {
     const id = await shorten(values.url);
     if (id) {
       setResult(id);
@@ -79,9 +76,9 @@ export default function ShortenForm() {
         {result && (
           <div
             onClick={onCopyResult}
-            className="flex hover:cursor-pointer hover:text-gray-400 flex-row justify-center items-center w-full text-sm text-gray-500"
+            className="flex hover:cursor-pointer hover:text-gray-500 flex-row justify-center items-center w-full text-sm text-gray-700"
           >
-            {result}{" "}
+            {process.env.NEXT_PUBLIC_URL}/{result}
             {showCopySuccessful ? (
               <SquareCheckBigIcon className="size-4 ml-2 text-green-500" />
             ) : (
