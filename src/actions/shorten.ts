@@ -1,13 +1,11 @@
 "use server";
 import { Redis } from "@upstash/redis";
 import { nanoid } from "nanoid";
-import { headers } from "next/headers";
 import normalizeUrl from "normalize-url";
 
 const redis = Redis.fromEnv();
 
 export const shorten = async (url: string): Promise<string | null> => {
-  console.log(headers());
   try {
     const normalized = normalizeUrl(url);
     // Check if URL is already in redis
