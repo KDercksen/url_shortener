@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "URL Shortener",
-  description: "Simple URL shortener with Next.js and Redis",
+  title: "Blurb - URL shortener",
+  description: "blurb.one is a URL shortener built with Next.js and Redis",
 };
 
 export default function RootLayout({
