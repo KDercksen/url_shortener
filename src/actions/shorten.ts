@@ -7,20 +7,29 @@ import { unstable_cache } from "next/cache";
 const redis = Redis.fromEnv();
 
 export const shorten = unstable_cache(
-  async (url: string) => shortenFn(url),
+  async (url: string, expiry?: number | null) => shortenFn(url, expiry),
   ["short-id"],
   { revalidate: 60 * 60 }
 );
 
-const shortenFn = async (url: string): Promise<string | null> => {
+const shortenFn = async (
+  url: string,
+  expiry?: number | null
+): Promise<string | null> => {
   try {
     const normalized = normalizeUrl(url);
     // Check if URL is already in redis
     const existing = (await redis.get(normalized)) as string;
     if (existing) {
       // Refresh expiry
-      await redis.expire(normalized, 60 * 60 * 24 * 7);
-      await redis.expire(existing, 60 * 60 * 24 * 7);
+      if (expiry) {
+        await redis.expire(normalized, 60 * 60 * 24 * expiry);
+        await redis.expire(existing, 60 * 60 * 24 * expiry);
+      } else {
+        // If it exists and no expiry is set, persist the key
+        await redis.persist(normalized);
+        await redis.persist(existing);
+      }
       return existing;
     }
     // Since valid URLs and default nanoid IDs can never clash, this is fine
@@ -30,9 +39,11 @@ const shortenFn = async (url: string): Promise<string | null> => {
     } while (await redis.exists(id));
     await redis.set(normalized, id);
     await redis.set(id, normalized);
-    // Expire after one week
-    await redis.expire(normalized, 60 * 60 * 24 * 7);
-    await redis.expire(id, 60 * 60 * 24 * 7);
+    if (expiry) {
+      await redis.expire(normalized, 60 * 60 * 24 * expiry);
+      await redis.expire(id, 60 * 60 * 24 * expiry);
+    }
+    // Persist is automatic for new keys
     return id;
   } catch (e) {
     console.error(e);

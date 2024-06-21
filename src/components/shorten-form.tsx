@@ -5,6 +5,7 @@ import { urlSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CopyIcon,
+  Infinity,
   LoaderCircle,
   SparklesIcon,
   SquareCheckBigIcon,
@@ -22,11 +23,12 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 export default function ShortenForm() {
   const form = useForm<z.infer<typeof urlSchema>>({
     resolver: zodResolver(urlSchema),
-    defaultValues: { url: "" },
+    defaultValues: { url: "", expiry: 7 },
   });
 
   const [result, setResult] = useState<string | null>(null);
@@ -71,6 +73,34 @@ export default function ShortenForm() {
                   <Input placeholder="https://..." {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="expiry"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Expiry</FormLabel>
+                <FormControl>
+                  <ToggleGroup
+                    type="single"
+                    className="justify-between"
+                    value={field.value?.toString() ?? "-1"}
+                    onValueChange={(value) => {
+                      if (value) {
+                        const i = parseInt(value);
+                        field.onChange(i > 0 ? i : null);
+                      }
+                    }}
+                  >
+                    <ToggleGroupItem value={"7"}>7 days</ToggleGroupItem>
+                    <ToggleGroupItem value={"30"}>30 days</ToggleGroupItem>
+                    <ToggleGroupItem value={"-1"}>
+                      <Infinity className="size-4" />
+                    </ToggleGroupItem>
+                  </ToggleGroup>
+                </FormControl>
               </FormItem>
             )}
           />

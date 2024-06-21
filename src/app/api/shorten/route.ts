@@ -14,12 +14,12 @@ export async function POST(req: Request) {
   if (!success) {
     return Response.json({ error: "Rate limit exceeded" }, { status: 429 });
   }
-  const { url } = await req.json();
-  const valid = urlSchema.safeParse({ url });
+  const body: { url: string; expiry?: number } = await req.json();
+  const valid = urlSchema.safeParse({ url: body.url });
   if (!valid.success) {
     return Response.json({ error: "Invalid URL" }, { status: 400 });
   }
-  const shortened = await shorten(url);
+  const shortened = await shorten(body.url, body.expiry ?? null);
   if (shortened) {
     return Response.json(
       { url: `${process.env.NEXT_PUBLIC_URL}/${shortened}` },
