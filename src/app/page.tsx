@@ -62,7 +62,7 @@ export default function Home() {
               </DialogDescription>
             </DialogHeader>
             <div className="whitespace-wrap font-mono text-sm">
-              curl -X POST -H {'"Content-Type: application/json"'} -d{" "}
+              curl -LX POST -H {'"Content-Type: application/json"'} -d{" "}
               {'{"url": "https://example.com"}'} https://blurb.one/api/shorten
             </div>
           </DialogContent>
