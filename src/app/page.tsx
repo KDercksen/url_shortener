@@ -29,7 +29,6 @@ export default function Home() {
           <ShortenForm />
         </CardContent>
       </Card>
-      <p className="text-center text-xs text-gray-400">URLs expire in 7 days</p>
       <p className="text-center text-sm">
         Made with ❤️ by{" "}
         <Link href="https://koendercksen.com">Koen Dercksen</Link>
