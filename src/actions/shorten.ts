@@ -14,7 +14,10 @@ export const shorten = async (url: string): Promise<string | null> => {
       return existing;
     }
     // Since valid URLs and default nanoid IDs can never clash, this is fine
-    const id = nanoid(7);
+    let id;
+    do {
+      id = nanoid(7);
+    } while (await redis.exists(id));
     await redis.set(normalized, id);
     await redis.set(id, normalized);
     // Expire after one week
