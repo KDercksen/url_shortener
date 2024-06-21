@@ -20,7 +20,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex space-y-4 min-h-screen flex-col items-center justify-center p-8">
-      <Card>
+      <Card className="rounded-3xl">
         <CardHeader>
           <CardTitle>blurb</CardTitle>
           <CardDescription>easy to share URLs</CardDescription>
