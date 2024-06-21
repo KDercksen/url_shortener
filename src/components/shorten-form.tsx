@@ -3,7 +3,12 @@
 import { shorten } from "@/actions/shorten";
 import { urlSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CopyIcon, SparklesIcon, SquareCheckBigIcon } from "lucide-react";
+import {
+  CopyIcon,
+  LoaderCircle,
+  SparklesIcon,
+  SquareCheckBigIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,9 +31,11 @@ export default function ShortenForm() {
 
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [showCopySuccessful, setShowCopySuccessful] = useState<boolean>(false);
 
   const onSubmit = async (values: z.infer<typeof urlSchema>) => {
+    setLoading(true);
     const id = await shorten(values.url);
     if (id) {
       setResult(id);
@@ -37,6 +44,7 @@ export default function ShortenForm() {
       setResult(null);
       setError(true);
     }
+    setLoading(false);
   };
 
   const onCopyResult = async () => {
@@ -66,8 +74,12 @@ export default function ShortenForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
-            <SparklesIcon className="size-4 mr-2" />
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? (
+              <LoaderCircle className="size-4 mr-2 animate-spin" />
+            ) : (
+              <SparklesIcon className="size-4 mr-2" />
+            )}
             Go
           </Button>
         </form>
