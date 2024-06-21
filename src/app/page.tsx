@@ -61,7 +61,7 @@ export default function Home() {
                 <span className="font-mono">/api/shorten</span> endpoint.
               </DialogDescription>
             </DialogHeader>
-            <div className="whitespace-wrap font-mono text-sm">
+            <div className="whitespace-wrap font-mono text-sm p-4 rounded-xl bg-gray-800 text-white">
               curl -LX POST -H {'"Content-Type: application/json"'} -d{" "}
               {'{"url": "https://example.com"}'} https://blurb.one/api/shorten
             </div>
