@@ -61,8 +61,15 @@ export default function Home() {
               </DialogDescription>
             </DialogHeader>
             <div className="whitespace-wrap font-mono text-sm p-4 rounded-xl bg-gray-800 text-white">
-              curl -LX POST -H {'"Content-Type: application/json"'} -d{" "}
-              {'{"url": "https://example.com"}'} https://blurb.one/api/shorten
+              {'{"url": "https://example.com"}'}
+            </div>
+            <DialogDescription>
+              Links do not expire by default. To specify link expiry in number
+              of days, add the <span className="font-mono">expiry</span> key to
+              the payload.
+            </DialogDescription>
+            <div className="whitespace-wrap font-mono text-sm p-4 rounded-xl bg-gray-800 text-white">
+              {'{"url": "https://example.com", "expiry": 7}'}
             </div>
           </DialogContent>
         </Dialog>
