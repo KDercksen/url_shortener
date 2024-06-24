@@ -12,18 +12,24 @@ const ratelimitIdentifier = "api";
 export async function POST(req: Request) {
   const { success } = await ratelimit.limit(ratelimitIdentifier);
   if (!success) {
-    return Response.json({ error: "Rate limit exceeded" }, { status: 429 });
+    return Response.json(
+      { error: "Rate limit exceeded" },
+      { status: 429, headers: { "Access-Control-Allow-Origin": "*" } }
+    );
   }
   const body: { url: string; expiry?: number } = await req.json();
   const valid = urlSchema.safeParse({ url: body.url });
   if (!valid.success) {
-    return Response.json({ error: "Invalid URL" }, { status: 400 });
+    return Response.json(
+      { error: "Invalid URL" },
+      { status: 400, headers: { "Access-Control-Allow-Origin": "*" } }
+    );
   }
   const shortened = await shorten(body.url, body.expiry ?? null);
   if (shortened) {
     return Response.json(
       { url: `${process.env.NEXT_PUBLIC_URL}/${shortened}` },
-      { status: 200 }
+      { status: 200, headers: { "Access-Control-Allow-Origin": "*" } }
     );
   } else {
     return Response.json(
