@@ -26,6 +26,9 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } else {
-    return Response.json({ error: "Failed to shorten URL" }, { status: 500 });
+    return Response.json(
+      { error: "Failed to shorten URL" },
+      { status: 500, headers: { "Access-Control-Allow-Origin": "*" } }
+    );
   }
 }
