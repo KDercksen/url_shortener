@@ -74,6 +74,7 @@ export default function Home() {
           </DialogContent>
         </Dialog>
       </div>
+      <Link className="text-sm hover:underline tracking-wide" href="/donate">Like this app?</Link>
     </main>
   );
 }
