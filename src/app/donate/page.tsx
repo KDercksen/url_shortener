@@ -25,7 +25,11 @@ export default function DonatePage() {
 
   const goToCheckout = async () => {
     setLoading(true);
-    await createCheckoutSession();
+    try {
+      await createCheckoutSession();
+    } catch (e: any) {
+      console.error(e?.message);
+    }
     setLoading(false);
   };
 
