@@ -1,11 +1,11 @@
 "use client";
 
 import { createCheckoutSession } from "@/actions/donate";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Banknote, LoaderCircle } from "lucide-react";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function DonatePage() {
   const [message, setMessage] = useState("");
@@ -46,8 +46,11 @@ export default function DonatePage() {
         />
         <div className="flex flex-col items-center text-center sm:text-left sm:items-start max-w-96 gap-8">
           <p>
+            <span className="italic font-semibold">
+              Blurb will remain free to use for everyone.
+            </span>{" "}
             If you enjoy what I am doing, please consider donating. Your support
-            helps free applications to keep running smoothly!
+            helps the application to keep running smoothly!
           </p>
           <div className="flex flex-row gap-4 items-center">
             <Button asChild variant="secondary" className="w-32">
