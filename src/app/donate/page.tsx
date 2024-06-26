@@ -36,7 +36,7 @@ export default function DonatePage() {
           {message}
         </p>
       )}
-      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8">
+      <div className="flex flex-col sm:flex-row items-center sm:items-center gap-8">
         <Image
           src="/donate_pic.png"
           alt="Donate Duck"
@@ -44,12 +44,15 @@ export default function DonatePage() {
           height={200}
           className="rounded-full"
         />
-        <div className="flex flex-col items-center sm:items-start max-w-96 gap-8">
+        <div className="flex flex-col items-center text-center sm:text-left sm:items-start max-w-96 gap-8">
           <p>
             If you enjoy what I am doing, please consider donating. Your support
             helps free applications to keep running smoothly!
           </p>
           <div className="flex flex-row gap-4 items-center">
+            <Button asChild variant="secondary" className="w-32">
+              <Link href="/">Home</Link>
+            </Button>
             <Button className="w-32" onClick={goToCheckout}>
               {!loading ? (
                 <>
@@ -58,9 +61,6 @@ export default function DonatePage() {
               ) : (
                 <LoaderCircle className="size-4 animate-spin" />
               )}
-            </Button>
-            <Button asChild variant="secondary" className="w-32">
-              <Link href="/">Home</Link>
             </Button>
           </div>
         </div>
