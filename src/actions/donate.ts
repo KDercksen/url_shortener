@@ -19,7 +19,7 @@ export const createCheckoutSession = async () => {
         quantity: 1,
       },
     ],
-    payment_method_types: ["card", "ideal"],
+    payment_method_types: ["card"],
     mode: "payment",
     success_url: `${h.get("origin")}/donate/?success=true`,
     cancel_url: `${h.get("origin")}/donate/?canceled=true`,
