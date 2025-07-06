@@ -2,11 +2,12 @@ import { getRedirect } from "@/actions/shorten";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function Redirect({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function Redirect(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
   const url = await getRedirect(params.slug);
   if (url) {
     redirect(url);

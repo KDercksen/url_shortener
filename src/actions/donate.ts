@@ -11,7 +11,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const createCheckoutSession = async () => {
-  const h = headers();
+  const h = await headers();
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
