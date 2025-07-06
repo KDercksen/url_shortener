@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedirect } from "./actions/shorten";
-import { notFound } from "next/navigation";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
