@@ -5,13 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Banknote, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DonatePage() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const query = useSearchParams();
+
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
       setMessage("Thank you for your support!");
     }
@@ -21,7 +23,7 @@ export default function DonatePage() {
     if (query.get("error")) {
       setMessage("An error occurred! Please try again later.");
     }
-  }, []);
+  }, [query]);
 
   const goToCheckout = async () => {
     setLoading(true);
