@@ -6,9 +6,9 @@ import { Banknote, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function DonatePage() {
+function DonatePage() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const query = useSearchParams();
@@ -75,5 +75,13 @@ export default function DonatePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DonatePageWrapper() {
+  return (
+    <Suspense>
+      <DonatePage />
+    </Suspense>
   );
 }
