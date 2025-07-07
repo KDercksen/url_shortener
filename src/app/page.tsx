@@ -61,7 +61,9 @@ export default function Home() {
               </DialogDescription>
             </DialogHeader>
             <div className="whitespace-wrap font-mono text-sm p-4 rounded-xl bg-gray-800 text-white">
-              {'{"url": "https://example.com"}'}
+              {
+                'curl -X POST -H "Content-Type: application/json" -d \'{"url": "https://example.com"}\' https://blurb.one/api/shorten'
+              }
             </div>
             <DialogDescription>
               Links do not expire by default. To specify link expiry in number
@@ -69,12 +71,16 @@ export default function Home() {
               the payload.
             </DialogDescription>
             <div className="whitespace-wrap font-mono text-sm p-4 rounded-xl bg-gray-800 text-white">
-              {'{"url": "https://example.com", "expiry": 7}'}
+              {
+                'curl -X POST -H "Content-Type: application/json" -d \'{"url": "https://example.com", "expiry": 7}\' https://blurb.one/api/shorten'
+              }
             </div>
           </DialogContent>
         </Dialog>
       </div>
-      <Link className="text-sm hover:underline tracking-wide" href="/donate">Like this app?</Link>
+      <Link className="text-sm hover:underline tracking-wide" href="/donate">
+        Like this app?
+      </Link>
     </main>
   );
 }
